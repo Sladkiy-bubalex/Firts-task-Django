@@ -13,7 +13,7 @@ class AdvertisementViewSet(ModelViewSet):
     queryset = Advertisement.objects.all()
     serializer_class = AdvertisementSerializer
     filter_backends = [DjangoFilterBackend]
-    filter_class = AdvertisementFilter
+    filterset_class = AdvertisementFilter
     filterset_fields = ['creator']
 
     def get_permissions(self):
