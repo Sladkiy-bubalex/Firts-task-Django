@@ -3,7 +3,6 @@ import pytest
 from rest_framework.test import APIClient 
 from students.models import Student, Course
 from model_bakery import baker
-from students.serializers import CourseSerializer
 
 
 BASE_URL = '/api/v1/courses/'
@@ -31,10 +30,9 @@ def test_retrive_course(client, course_factory):
     course = course_factory(_quantity=3)
     response = client.get(f'{BASE_URL}{course[1].id}/')
     data = response.json()
-    response_db = Course.objects.filter(id=course[1].id).first()
 
     assert response.status_code == 200
-    assert response_db.name == data['name']
+    assert course[1].name == data['name']
 
 @pytest.mark.django_db
 def test_list_course(client):
@@ -51,7 +49,7 @@ def test_search_id_course(client, course_factory):
     data = response.json()
     
     assert response.status_code == 200
-    assert data[0]['name'] == Course.objects.filter(id=courses[0].id).first().name
+    assert data[0]['name'] == courses[0].name
 
 @pytest.mark.django_db
 def test_search_name_course(client, course_factory):
