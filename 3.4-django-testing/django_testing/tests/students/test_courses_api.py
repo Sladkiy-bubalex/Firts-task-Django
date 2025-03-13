@@ -1,4 +1,3 @@
-from unittest.mock import MagicMock, patch
 import pytest
 from rest_framework.test import APIClient 
 from students.models import Student, Course

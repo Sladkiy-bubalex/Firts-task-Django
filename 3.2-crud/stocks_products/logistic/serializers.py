@@ -3,14 +3,14 @@ from .models import Product, Stock, StockProduct
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    
+
     class Meta():
         model = Product
         fields = '__all__'
 
 
 class ProductPositionSerializer(serializers.ModelSerializer):
-    
+
     class Meta():
         model = StockProduct
         fields = ['product', 'quantity', 'price']
