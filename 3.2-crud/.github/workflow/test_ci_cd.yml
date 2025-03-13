@@ -2,7 +2,7 @@ name: Test ci\cd
 
 on:
     push:
-        branches: [main]
+        branches: [video]
 
 jobs:
     testing:
