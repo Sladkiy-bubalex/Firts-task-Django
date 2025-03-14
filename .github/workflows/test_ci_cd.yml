@@ -13,8 +13,6 @@ jobs:
           NAME_DB: ${{ secrets.NAME_DB }}
           PORT_DB: ${{ secrets.PORT_DB }}
           HOTS_DB: ${{ secrets.HOST_DB }}
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
         services:
             postgres_main:
               image: postgres:latest
@@ -40,13 +38,13 @@ jobs:
                 python-version: 3.13
             
             - name: Установка зависимостей
-              run: pip install -r stocks_products/requirements.txt
+              run: pip install -r 3.2-crud/stocks_products/requirements.txt
             
             - name: Проверка линтером
               run: flake8 stocks_products --exclude migrations --ignore E501,F401
 
             - name: Тест
-              run: python stocks_products/manage.py pytest
+              run: python 3.2-crud/stocks_products/manage.py pytest
               env:
                 USER_DB: ${{ env.USER_DB }}
                 PASSWORD_DB: ${{ env.PASSWORD_DB }}
@@ -60,8 +58,10 @@ jobs:
         - name: deploy
           uses: appleboy/ssh-action@master
           env:
-            DEPLOY_HOST: ${{ env.DEPLOY_HOST }}
-            DEPLOY_USERNAME: ${{ env.DEPLOY_USERNAME }}
+            DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+            DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+            DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
           with:
-            host: DEPLOY_HOST
-            username: DEPLOY_USERNAME
+            host: ${{ env.DEPLOY_HOST }}
+            username: ${{ env.DEPLOY_USERNAME }}
+            password: ${{ env.DEPLOY_PASSWORD }}
