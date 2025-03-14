@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'stocks_products.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME_DATABASE'),
-        'HOST': os.getenv('HOST'),
+        'NAME': os.getenv('NAME_DB'),
+        'HOST': os.getenv('HOST_DB'),
         'PORT': '5432',
-        'USER': os.getenv('USER'),
-        'PASSWORD': os.getenv('PASSWORD'),
+        'USER': os.getenv('USER_DB'),
+        'PASSWORD': os.getenv('PASSWORD_DB'),
     }
 }
 

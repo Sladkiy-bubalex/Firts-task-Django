@@ -12,7 +12,7 @@ jobs:
           PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
           NAME_DB: ${{ secrets.NAME_DB }}
           PORT_DB: ${{ secrets.PORT_DB }}
-          HOTS_DB: ${{ secrets.HOST_DB }}
+          HOST_DB: ${{ secrets.HOST_DB }}
         services:
             postgres_main:
               image: postgres:latest
@@ -36,12 +36,24 @@ jobs:
               uses: actions/setup-python@v5
               with:
                 python-version: 3.13
-            
+
             - name: Установка зависимостей
               run: pip install -r 3.2-crud/requirements.txt
-            
+
             - name: Проверка линтером
               run: flake8 3.2-crud/stocks_products --exclude migrations --ignore E501,F401
+
+            - name: Ожидание готовности базы данных
+              run: |
+                until pg_isready -h ${{ env.HOST_DB }} -p ${{ env.PORT_DB }} -U ${{ env.USER_DB }}; do
+                  echo "Ожидание готовности базы данных..."
+                  sleep 2
+                done
+
+            - name: Применение миграций
+              run: |
+                cd 3.2-crud/stocks_products/
+                python manage.py migrate
 
             - name: Тест
               run: |
