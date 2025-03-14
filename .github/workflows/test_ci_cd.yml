@@ -79,3 +79,7 @@ jobs:
             host: ${{ env.DEPLOY_HOST }}
             username: ${{ env.DEPLOY_USERNAME }}
             password: ${{ env.DEPLOY_PASSWORD }}
+            script: |
+              cd 3.2-crud/stocks_products
+              git pull
+              sudo systemctl restart gunicorn
