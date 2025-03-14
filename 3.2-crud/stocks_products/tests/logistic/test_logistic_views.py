@@ -1,14 +1,16 @@
 import pytest
-from rest_framework.test import APIClient 
+from rest_framework.test import APIClient
 from logistic.models import Product, Stock
 from model_bakery import baker
 
 
 BASE_URL = 'http://localhost:8000/api/v1'
 
+
 @pytest.fixture
 def client():
     return APIClient()
+
 
 @pytest.fixture
 def product_factory():
@@ -17,11 +19,12 @@ def product_factory():
 
     return factory
 
+
 @pytest.fixture
 def stock_factory():
     def factory(*args, **kwargs):
         return baker.make(Stock, *args, **kwargs)
-    
+
     return factory
 
 

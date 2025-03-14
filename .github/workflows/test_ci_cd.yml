@@ -41,10 +41,12 @@ jobs:
               run: pip install -r 3.2-crud/stocks_products/requirements.txt
             
             - name: Проверка линтером
-              run: flake8 stocks_products --exclude migrations --ignore E501,F401
+              run: flake8 3.2-crud/stocks_products --exclude migrations --ignore E501,F401
 
             - name: Тест
-              run: python 3.2-crud/stocks_products/manage.py pytest
+              run: |
+                cd 3.2-crud/stocks_products/
+                pytest
               env:
                 USER_DB: ${{ env.USER_DB }}
                 PASSWORD_DB: ${{ env.PASSWORD_DB }}
